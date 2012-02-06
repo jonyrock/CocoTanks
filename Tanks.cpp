@@ -1,8 +1,9 @@
 #include "Tanks.h"
 
 
-//USING_NS_CC;
 using namespace cocos2d;
+
+#define DEBUG
 
 CCScene* Tanks::scene() {
 
@@ -11,7 +12,7 @@ CCScene* Tanks::scene() {
     scene->addChild(layer);
     
     return scene;
-    
+        
 }
 
 bool Tanks::init() {
@@ -54,7 +55,7 @@ bool Tanks::init() {
     
     this->setIsTouchEnabled(true);
     
-    
+    CCLOG("Yoyoyo");
     
     return true;
     
@@ -81,6 +82,8 @@ void Tanks::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {
     location = CCDirector::sharedDirector()->convertToGL(location);
     
     this->player->setPosition(location);
+    
+    
     
 }
 
