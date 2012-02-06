@@ -1,9 +1,6 @@
 #include "Tanks.h"
 
-
 using namespace cocos2d;
-
-#define DEBUG
 
 CCScene* Tanks::scene() {
 
@@ -12,50 +9,55 @@ CCScene* Tanks::scene() {
     scene->addChild(layer);
     
     return scene;
-        
+    
 }
 
 bool Tanks::init() {
 
+    // nesessary call base initialization
     if(!CCLayer::init()) {
         return false;
     }
     
+    // end nesessary call base initialization
+        
+    this->setIsTouchEnabled(true); // define that we want to use ccTouchesEnded()
+    this->setIsKeypadEnabled(true);
+    
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize(); // set window size
+    
+    // locate menu with one close button
     CCMenuItemImage* pCloseItem =
         CCMenuItemImage::itemFromNormalImage("CloseNormal.png", "CloseSelected.png", this,
                 menu_selector(Tanks::menuCloseCallback));
                 
-    pCloseItem->setPosition(CCPointMake((float)(CCDirector::sharedDirector()->getWinSize().width - 20),
-                                        (float)20));
-                                        
+    pCloseItem->setPosition(CCPoint(winSize.width - 20, 20));
+    
     CCMenu* pMenu = CCMenu::menuWithItems(pCloseItem, NULL);
     pMenu->setPosition(CCPointZero);
     this->addChild(pMenu, order());
+    // end locate menu with one close buttton
     
-    CCLabelTTF* pLabel = CCLabelTTF::labelWithString("Tanks", "Arial", 24);
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
-    pLabel->setPosition(ccp(size.width / 2, size.height - 50));
-    this->addChild(pLabel, order());
-    
-//    CCSprite* pSprite = CCSprite::spriteWithFile("HelloWorld.png");
-//    pSprite->setPosition(ccp(size.width/2, size.height/2));
-//    this->addChild(pSprite, 0);
-
-    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    // locate player unit
     this->player = CCSprite::spriteWithFile("tank.png", CCRectMake(0, 0, 73, 71));
-    
-    
-    // instead of "player->getContentSize().width/2"
-    this->player->setPosition(CCPointMake(winSize.width / 2,
-                                          player->getContentSize().height / 2));
-                                          
+    this->player->setPosition(CCPoint(winSize.width / 2, player->getContentSize().height / 2));
     this->addChild(player, order());
+    // end locate player unit
     
+    // locate playerEnemy unit and launch moving
+    this->playerEnemy = CCSprite::spriteWithFile("tank.png", CCRectMake(0, 0, 73, 71));
+    this->playerEnemy->setPosition(CCPoint(winSize.width - 40, winSize.height / 2));
+    this->playerEnemy->setRotation(-90.0);
+    this->addChild(playerEnemy, order());
+    
+    CCFiniteTimeAction* actionMove = CCMoveTo::actionWithDuration(10.0f,
+                                     CCPoint(1.0f, winSize.height / 1.5));
+    this->playerEnemy->runAction(actionMove);
+    // end locate playerEnemy unit
+    
+    // begin call gameLogic in loop
     this->schedule(schedule_selector(Tanks::gameLogic), 0.03);
     
-    this->setIsTouchEnabled(true);
-    
-    CCLOG("Yoyoyo");
     
     return true;
     
@@ -82,8 +84,6 @@ void Tanks::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {
     location = CCDirector::sharedDirector()->convertToGL(location);
     
     this->player->setPosition(location);
-    
-    
     
 }
 

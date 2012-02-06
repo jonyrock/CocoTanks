@@ -66,7 +66,7 @@ bool AppDelegate::initInstance() {
 		// The HelloWorld is designed as HVGA.
 		CCEGLView* pMainWnd = new CCEGLView();
 		CC_BREAK_IF(! pMainWnd
-				|| ! pMainWnd->Create("Tanks", 800, 600, 800, 600));
+				|| ! pMainWnd->Create("Tanks", 480, 320, 480, 320));
 
 		CCFileUtils::setResourcePath("../Resource/");
 
