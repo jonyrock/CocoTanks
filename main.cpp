@@ -1,8 +1,5 @@
-#include <stdio.h>
-#include <iostream>
 
 #include "main.h"
-#include "AppDelegate.h"
 
 int main(int argc, char **argv) {
     
