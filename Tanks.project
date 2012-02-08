@@ -42,6 +42,7 @@
       
       
       
+      
       ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
@@ -88,6 +89,7 @@
       
       
       
+      
       ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
@@ -124,5 +126,7 @@
   <VirtualDirectory Name="JoystickTests">
     <File Name="Joystick/JoystickLayer.cpp"/>
     <File Name="Joystick/JoystickLayer.h"/>
+    <File Name="Joystick/JoystickScene.h"/>
+    <File Name="Joystick/JoystickScene.cpp"/>
   </VirtualDirectory>
 </CodeLite_Project>
