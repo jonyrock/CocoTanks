@@ -3,16 +3,7 @@
 #include "cocos2d.h"
 #include "Tanks.h"
 
-#include "CCEGLView.h"
-
-USING_NS_CC;
-
-AppDelegate::AppDelegate() {
-
-}
-
-AppDelegate::~AppDelegate() {
-}
+using namespace cocos2d;
 
 bool AppDelegate::initInstance() {
 	

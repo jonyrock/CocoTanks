@@ -1,4 +1,6 @@
+
 #include "Tanks.h"
+#include "Joystick/JoystickScene.h"
 
 using namespace cocos2d;
 
@@ -20,9 +22,8 @@ bool Tanks::init() {
     }
     
     // end nesessary call base initialization
-        
+    
     this->setIsTouchEnabled(true); // define that we want to use ccTouchesEnded()
-    this->setIsKeypadEnabled(true);
     
     CCSize winSize = CCDirector::sharedDirector()->getWinSize(); // set window size
     
@@ -39,32 +40,41 @@ bool Tanks::init() {
     // end locate menu with one close buttton
     
     // locate player unit
-    this->player = CCSprite::spriteWithFile("tank.png", CCRectMake(0, 0, 73, 71));
+    this->player = CCSprite::spriteWithFile("tankSmall.jpg", CCRectMake(0, 0, 37, 31));
     this->player->setPosition(CCPoint(winSize.width / 2, player->getContentSize().height / 2));
     this->addChild(player, order());
     // end locate player unit
-    
+
     // locate playerEnemy unit and launch moving
-    this->playerEnemy = CCSprite::spriteWithFile("tank.png", CCRectMake(0, 0, 73, 71));
+    this->playerEnemy = CCSprite::spriteWithFile("tankSmall.jpg", CCRectMake(0, 0, 37, 31));
     this->playerEnemy->setPosition(CCPoint(winSize.width - 40, winSize.height / 2));
     this->playerEnemy->setRotation(-90.0);
     this->addChild(playerEnemy, order());
     
-    CCFiniteTimeAction* actionMove = CCMoveTo::actionWithDuration(10.0f,
-                                     CCPoint(1.0f, winSize.height / 1.5));
+    CCFiniteTimeAction* actionMove = CCMoveTo::actionWithDuration(10.0,
+                                     CCPoint(1.0, winSize.height / 1.5));
     this->playerEnemy->runAction(actionMove);
     // end locate playerEnemy unit
     
-    // begin call gameLogic in loop
+    // begin call gameLogic in loop.
+    // ADDED REPLACEMENT TO JOYSTICK
     this->schedule(schedule_selector(Tanks::gameLogic), 0.03);
     
     
+    // return must be true or will be black window.
     return true;
+    
+    
     
 }
 
 void Tanks::gameLogic(cocos2d::ccTime dt) {
-
+    
+    // replace scene only for debug
+    JoystickScene* joystickScene = JoystickScene::node();
+    CCDirector::sharedDirector()->replaceScene(joystickScene);
+    // end replace
+    
     CCPoint p = this->player->getPosition();
     p.y += 1;
     this->player->setPosition(p);
